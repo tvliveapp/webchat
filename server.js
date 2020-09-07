@@ -16,9 +16,19 @@ wss.on('connection', (ws) => {
   console.log('Client connected');
   ws.on('close', () => console.log('Client disconnected'));
 });
+connection.on('message', function(message) {
+        if (message.type === 'utf8') {
+            console.log('Received Message: ' + message.utf8Data);
+            wss.clients.forEach((client) => {
+              client.send(message.utf8Data);
+            });
+        }
+       
+    });
 
-setInterval(() => {
+/*setInterval(() => {
   wss.clients.forEach((client) => {
     client.send(new Date().toTimeString());
   });
 }, 1000);
+*/

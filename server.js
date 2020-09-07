@@ -12,18 +12,14 @@ const server = express()
 
 const wss = new Server({ server });
 
-wss.on('connection', (ws) => {
-  console.log('Client connected');
-  ws.on('close', () => console.log('Client disconnected'));
-  wss.on('message', function incoming(message) {
-        
-            console.log('Received Message: ' + message);
-            wss.clients.forEach((client) => {
-              client.send(message);
-            });
-        
-       
+wss.on('connection', function connection(ws) {
+  ws.on('message', function incoming(data) {
+    wss.clients.forEach(function each(client) {
+      if (client !== ws && client.readyState === WebSocket.OPEN) {
+        client.send(data);
+      }
     });
+  });
 });
 
 

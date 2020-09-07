@@ -16,13 +16,13 @@ wss.on('connection', (ws) => {
   console.log('Client connected');
   ws.on('close', () => console.log('Client disconnected'));
 });
-wss.on('message', function(message) {
-        if (message.type === 'utf8') {
-            console.log('Received Message: ' + message.utf8Data);
+wss.on('message', function incoming(message) {
+        
+            console.log('Received Message: ' + message);
             wss.clients.forEach((client) => {
-              client.send(message.utf8Data);
+              client.send(message);
             });
-        }
+        
        
     });
 

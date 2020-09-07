@@ -15,8 +15,7 @@ const wss = new Server({ server });
 wss.on('connection', (ws) => {
   console.log('Client connected');
   ws.on('close', () => console.log('Client disconnected'));
-});
-wss.on('message', function incoming(message) {
+  wss.on('message', function incoming(message) {
         
             console.log('Received Message: ' + message);
             wss.clients.forEach((client) => {
@@ -25,6 +24,8 @@ wss.on('message', function incoming(message) {
         
        
     });
+});
+
 
 /*setInterval(() => {
   wss.clients.forEach((client) => {

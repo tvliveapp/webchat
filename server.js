@@ -12,20 +12,27 @@ const server = express()
 
 const wss = new Server({ server });
 
+function onMsg(msg){
+	//console.log(msg);
+	wss.clients.forEach(function each(client) {
+        try {
+			client.send(msg);
+		}
+		catch(err) {
+		  console.log("error");
+		}
+		
+    });
+}
+/*
+console.log(wss.clients)
+	wss.clients.forEach(function each(client) {
+        client.send(data);
+    });
+*/
 wss.on('connection', function connection(ws) {
   ws.on('message', function incoming(data) {
-    wss.clients.forEach(function each(client) {
-      if (client !== ws && client.readyState === WebSocket.OPEN) {
-        client.send(data);
-      }
-    });
+    
+	onMsg(data);
   });
 });
-
-
-/*setInterval(() => {
-  wss.clients.forEach((client) => {
-    client.send(new Date().toTimeString());
-  });
-}, 1000);
-*/

@@ -31,8 +31,18 @@ console.log(wss.clients)
     });
 */
 wss.on('connection', function connection(ws) {
+  console.log("new...");
   ws.on('message', function incoming(data) {
-    
-	onMsg(data);
+    onMsg(data);
   });
+  
 });
+
+setInterval(() => {
+  console.log("send ack");
+  wss.clients.forEach((client) => {
+    client.send("ack#1");
+  });
+}, 1000);
+
+

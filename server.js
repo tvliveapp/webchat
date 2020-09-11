@@ -17,6 +17,7 @@ function onMsg(msg){
 	wss.clients.forEach(function each(client) {
         try {
 			
+		console.log(msg.split("#")[0])
 		if(msg.split("#")[0]=="alarma")
 			console.log(msg.split("#")[1])
 		client.send(msg);

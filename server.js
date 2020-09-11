@@ -17,9 +17,9 @@ function onMsg(msg){
 	wss.clients.forEach(function each(client) {
         try {
 			
-		console.log(msg.split("#")[0])
+		//console.log(msg.split("#")[0])
 		if(msg.split("#")[0]=="alarma")
-			console.log(msg.split("#")[1])
+			console.log("alatma:"+msg.split("#")[1])
 		client.send(msg);
 		}
 		catch(err) {
@@ -27,7 +27,7 @@ function onMsg(msg){
 		  console.log("error");
 		}
 		
-    });
+    }); 
 }
 /*
 console.log(wss.clients)
@@ -48,6 +48,6 @@ setInterval(() => {
   wss.clients.forEach((client) => {
     client.send("ack#1");
   });
-}, 2500);
+}, 4000);
 
 

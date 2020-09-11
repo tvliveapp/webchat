@@ -48,6 +48,6 @@ setInterval(() => {
   wss.clients.forEach((client) => {
     client.send("ack#1");
   });
-}, 2000);
+}, 3000);
 
 

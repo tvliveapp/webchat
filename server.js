@@ -16,7 +16,8 @@ function onMsg(msg){
 	//console.log(msg);
 	wss.clients.forEach(function each(client) {
         try {
-			client.send(msg);
+			
+		client.send(msg);
 		}
 		catch(err) {
 		  console.log("error");

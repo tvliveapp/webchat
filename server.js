@@ -5,10 +5,12 @@ const { Server } = require('ws');
 
 const PORT = process.env.PORT || 3000;
 const INDEX = '/index.html';
-
+/*
 const server = express()
   .use((req, res) => res.sendFile(INDEX, { root: __dirname }))
   .listen(PORT, () => console.log(`Listening on ${PORT}`));
+*/
+
 
 const wss = new Server({ server });
 
@@ -49,5 +51,27 @@ setInterval(() => {
     client.send("ack#1");
   });
 }, 3000);
+
+var http = require('http');
+
+http.createServer(function(request, response) {
+  var proxy = http.createClient(80, request.headers['host'])
+  var proxy_request = proxy.request(request.method, request.url, request.headers);
+  proxy_request.addListener('response', function (proxy_response) {
+    proxy_response.addListener('data', function(chunk) {
+      response.write(chunk, 'binary');
+    });
+    proxy_response.addListener('end', function() {
+      response.end();
+    });
+    response.writeHead(proxy_response.statusCode, proxy_response.headers);
+  });
+  request.addListener('data', function(chunk) {
+    proxy_request.write(chunk, 'binary');
+  });
+  request.addListener('end', function() {
+    proxy_request.end();
+  });
+}).listen(PORT);
 
 

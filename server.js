@@ -77,10 +77,10 @@ http.createServer(function(request, response) {
 */
 
 var http = require('http');
-var sys  = require('sys');
+//var sys  = require('sys');
 
 http.createServer(function(request, response) {
-  sys.log(request.connection.remoteAddress + ": " + request.method + " " + request.url);
+  console.log(request.connection.remoteAddress + ": " + request.method + " " + request.url);
   var proxy = http.createClient(80, request.headers['host'])
   var proxy_request = proxy.request(request.method, request.url, request.headers);
   proxy_request.addListener('response', function (proxy_response) {
